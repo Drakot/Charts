@@ -15,7 +15,8 @@ import CoreGraphics
 #if !os(OSX)
     import UIKit
 #endif
-
+import Foundation
+import CoreGraphics
 open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
 {
     private class Buffer
@@ -309,7 +310,11 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
             
-            context.fill(barRect)
+            //context.fill(barRect)
+            let bezierPath = UIBezierPath(roundedRect: barRect, cornerRadius: 10)
+            context.addPath(bezierPath.cgPath)
+
+            context.drawPath(using: .fill)
             
             if drawBorder
             {
